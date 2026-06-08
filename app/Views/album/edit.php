@@ -89,10 +89,12 @@
     </div>
 </div>
 
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.jsdelivr.net/npm/tinymce@7/tinymce.min.js"></script>
 <script>
     tinymce.init({
         selector: '#description',
+        base_url: 'https://cdn.jsdelivr.net/npm/tinymce@7',
+        suffix: '.min',
         language: 'cs',
         plugins: 'lists link',
         toolbar: 'bold italic underline | bullist numlist | link',

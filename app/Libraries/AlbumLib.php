@@ -39,7 +39,7 @@ class AlbumLib
         $builder = $db->table('album')
             ->select('album.*, artist.name AS artist_name')
             ->join('artist', 'artist.id = album.artist_id')
-            ->whereNull('album.deleted_at')
+            ->where('album.deleted_at IS NULL')
             ->orderBy('album.release_date', 'DESC');
 
         if (! empty($filters['year'])) {
@@ -73,7 +73,7 @@ class AlbumLib
         return $db->table('album')
             ->select('album.*, artist.name AS artist_name')
             ->join('artist', 'artist.id = album.artist_id')
-            ->whereNull('album.deleted_at')
+            ->where('album.deleted_at IS NULL')
             ->orderBy('album.release_date', 'DESC')
             ->get()->getResultArray();
     }
@@ -107,7 +107,7 @@ class AlbumLib
             ->join('artist', 'artist.id = album.artist_id')
             ->join('review', 'review.album_id = album.id AND review.deleted_at IS NULL', 'left')
             ->where('album.id', $id)
-            ->whereNull('album.deleted_at')
+            ->where('album.deleted_at IS NULL')
             ->groupBy('album.id')
             ->get()->getRowArray();
 
@@ -117,7 +117,7 @@ class AlbumLib
 
         $album['tracks'] = $db->table('track')
             ->where('album_id', $id)
-            ->whereNull('deleted_at')
+            ->where('deleted_at IS NULL')
             ->orderBy('track_number', 'ASC')
             ->get()->getResultArray();
 
@@ -125,7 +125,7 @@ class AlbumLib
             ->select('review.*, user.username')
             ->join('user', 'user.id = review.user_id')
             ->where('review.album_id', $id)
-            ->whereNull('review.deleted_at')
+            ->where('review.deleted_at IS NULL')
             ->orderBy('review.created_at', 'DESC')
             ->get()->getResultArray();
 

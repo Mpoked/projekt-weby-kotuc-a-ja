@@ -16,6 +16,8 @@ class ArtistModel extends Model
         'name',
         'photo',
         'bio',
+        'country',
+        'formed_year',
     ];
 
     protected bool $allowEmptyInserts = false;

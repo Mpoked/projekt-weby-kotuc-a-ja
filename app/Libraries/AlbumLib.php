@@ -43,7 +43,8 @@ class AlbumLib
             ->orderBy('album.release_date', 'DESC');
 
         if (! empty($filters['year'])) {
-            $builder->where('YEAR(album.release_date)', (int) $filters['year']);
+            $year = (int) $filters['year'];
+            $builder->where("YEAR(album.release_date) = $year");
         }
 
         if (! empty($filters['genre_id'])) {

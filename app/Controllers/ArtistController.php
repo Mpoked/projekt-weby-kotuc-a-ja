@@ -47,7 +47,7 @@ class ArtistController extends BaseController
 
         $db = \Config\Database::connect();
         $genres = $db->table('genre')
-            ->select('genre.id, genre.name')
+            ->select('genre.id, genre.name', false)
             ->join('artist_genre', 'artist_genre.genre_id = genre.id')
             ->where('artist_genre.artist_id', $id)
             ->where('genre.deleted_at IS NULL')
@@ -59,7 +59,7 @@ class ArtistController extends BaseController
             ->findAll();
 
         return view('artist/show', [
-            'title'  => $artist['name'],
+            'title'  => $artist->name,
             'artist' => $artist,
             'genres' => $genres,
             'albums' => $albums,

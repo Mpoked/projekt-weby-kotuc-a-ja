@@ -30,16 +30,6 @@
             <?php endforeach; ?>
         </select>
     </div>
-    <div class="col-md-3">
-        <select name="year" class="form-select">
-            <option value="">— Všechny roky —</option>
-            <?php foreach ($years as $y): ?>
-                <option value="<?= $y ?>" <?= (string)($filters['year'] ?? '') === (string)$y ? 'selected' : '' ?>>
-                    <?= esc($y) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
     <div class="col-auto">
         <button type="submit" class="btn btn-outline-primary">Filtrovat</button>
         <a href="<?= base_url('album') ?>" class="btn btn-outline-secondary">Zrušit</a>

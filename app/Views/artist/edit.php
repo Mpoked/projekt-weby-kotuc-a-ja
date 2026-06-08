@@ -106,7 +106,6 @@
 
     $('#genres').select2({
         theme: 'bootstrap-5',
-        placeholder: 'Vyberte žánry...',
         allowClear: true,
     });
 </script>

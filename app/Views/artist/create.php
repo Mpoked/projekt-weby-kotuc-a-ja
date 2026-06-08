@@ -91,6 +91,7 @@
         toolbar: 'bold italic underline | bullist numlist | link',
         menubar: false,
         height: 250,
+        license_key: 'gpl',
     });
 
     $('#genres').select2({

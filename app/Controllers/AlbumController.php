@@ -37,11 +37,11 @@ class AlbumController extends BaseController
         $result  = $this->albumLib->getPaginated($filters, $perPage);
 
         $db = \Config\Database::connect();
-        $genres = $db->table('genre')->whereNull('deleted_at')->orderBy('name')->get()->getResultArray();
+        $genres = $db->table('genre')->where('deleted_at IS NULL')->orderBy('name')->get()->getResultArray();
 
         $years = $db->table('album')
             ->select('YEAR(release_date) AS yr')
-            ->whereNull('deleted_at')
+            ->where('deleted_at IS NULL')
             ->where('release_date IS NOT NULL')
             ->groupBy('yr')
             ->orderBy('yr', 'DESC')
@@ -79,7 +79,7 @@ class AlbumController extends BaseController
             $userReviewExists = (bool) $db->table('review')
                 ->where('album_id', $id)
                 ->where('user_id', session()->get('user_id'))
-                ->whereNull('deleted_at')
+                ->where('deleted_at IS NULL')
                 ->countAllResults();
         }
 

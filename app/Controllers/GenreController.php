@@ -29,7 +29,7 @@ class GenreController extends BaseController
         $genres = $db->table('genre')
             ->select('genre.*, COUNT(artist_genre.artist_id) AS artist_count')
             ->join('artist_genre', 'artist_genre.genre_id = genre.id', 'left')
-            ->whereNull('genre.deleted_at')
+            ->where('genre.deleted_at IS NULL')
             ->groupBy('genre.id')
             ->orderBy('genre.name', 'ASC')
             ->get()->getResultArray();
@@ -57,7 +57,7 @@ class GenreController extends BaseController
             ->select('artist.*')
             ->join('artist_genre', 'artist_genre.artist_id = artist.id')
             ->where('artist_genre.genre_id', $id)
-            ->whereNull('artist.deleted_at')
+            ->where('artist.deleted_at IS NULL')
             ->orderBy('artist.name', 'ASC')
             ->get()->getResultArray();
 

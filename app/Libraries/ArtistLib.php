@@ -13,7 +13,7 @@ use App\Models\ArtistModel;
 class ArtistLib
 {
     protected ArtistModel $model;
-    protected string $uploadPath = WRITEPATH . 'uploads/artists/';
+    protected string $uploadPath = FCPATH . 'uploads/artists/';
     protected string $uploadUrl  = 'uploads/artists/';
 
     public function __construct()
@@ -25,7 +25,7 @@ class ArtistLib
     }
 
     /**
-     * Vrátí všechny umělce seřazené podle jména (bez smazaných).
+     * Vrátí všechny umělce seřazené podle ID (bez smazaných).
      *
      * @return array Seznam umělců z tabulky artist
      */
@@ -38,9 +38,9 @@ class ArtistLib
      * Vrátí jednoho umělce podle jeho ID.
      *
      * @param int $id  ID umělce v tabulce artist
-     * @return array|null  Data umělce, nebo null pokud neexistuje / byl smazán
+     * @return object|null  Data umělce, nebo null pokud neexistuje / byl smazán
      */
-    public function getById(int $id): ?array
+    public function getById(int $id): ?object
     {
         return $this->model->find($id);
     }
@@ -90,8 +90,8 @@ class ArtistLib
 
         if ($file !== null && $file->isValid() && ! $file->hasMoved()) {
             $artist = $this->getById($id);
-            if ($artist && $artist['photo']) {
-                $oldFile = $this->uploadPath . basename($artist['photo']);
+            if ($artist && $artist->photo) {
+                $oldFile = $this->uploadPath . basename($artist->photo);
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
                 }

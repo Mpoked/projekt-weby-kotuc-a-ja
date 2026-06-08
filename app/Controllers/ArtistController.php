@@ -51,7 +51,7 @@ class ArtistController extends BaseController
             ->join('artist_genre', 'artist_genre.genre_id = genre.id')
             ->where('artist_genre.artist_id', $id)
             ->where('genre.deleted_at IS NULL')
-            ->get()->getResultArray();
+            ->get()->getResultObject();
 
         $albums = (new \App\Models\AlbumModel())
             ->where('artist_id', $id)

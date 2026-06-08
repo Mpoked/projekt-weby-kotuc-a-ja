@@ -51,9 +51,9 @@
                 <label for="genres" class="form-label">Žánry</label>
                 <select id="genres" name="genres[]" class="form-select" multiple>
                     <?php foreach ($genre_options as $genre): ?>
-                        <option value="<?= $genre['id'] ?>"
-                            <?= in_array($genre['id'], (array) old('genres', [])) ? 'selected' : '' ?>>
-                            <?= esc($genre['name']) ?>
+                        <option value="<?= $genre->id ?>"
+                            <?= in_array($genre->id, (array) old('genres', [])) ? 'selected' : '' ?>>
+                            <?= esc($genre->name) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

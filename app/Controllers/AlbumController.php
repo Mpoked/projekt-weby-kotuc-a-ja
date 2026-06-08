@@ -37,15 +37,11 @@ class AlbumController extends BaseController
         $result  = $this->albumLib->getPaginated($filters, $perPage);
 
         $db = \Config\Database::connect();
-        $genres = $db->table('genre')->where('deleted_at IS NULL')->orderBy('name')->get()->getResultArray();
+        $genres = $db->table('genre')->where('deleted_at IS NULL')->orderBy('name')->get()->getResultObject();
 
-        $years = $db->table('album')
-            ->select('YEAR(release_date) AS yr')
-            ->where('deleted_at IS NULL')
-            ->where('release_date IS NOT NULL')
-            ->groupBy('yr')
-            ->orderBy('yr', 'DESC')
-            ->get()->getResultArray();
+        $years = $db->query(
+            'SELECT DISTINCT YEAR(release_date) AS yr FROM album WHERE deleted_at IS NULL AND release_date IS NOT NULL ORDER BY yr DESC'
+        )->getResultArray();
 
         return view('album/index', [
             'title'   => 'Alba',
@@ -84,7 +80,7 @@ class AlbumController extends BaseController
         }
 
         return view('album/show', [
-            'title'            => $album['title'],
+            'title'            => $album->title,
             'album'            => $album,
             'userReviewExists' => $userReviewExists,
         ]);
@@ -212,7 +208,7 @@ class AlbumController extends BaseController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
 
-        $filename = 'album-' . preg_replace('/[^a-z0-9]/i', '-', $album['title']) . '.pdf';
+        $filename = 'album-' . preg_replace('/[^a-z0-9]/i', '-', $album->title) . '.pdf';
         $dompdf->stream($filename, ['Attachment' => true]);
     }
 }

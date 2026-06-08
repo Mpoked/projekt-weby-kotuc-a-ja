@@ -37,29 +37,29 @@
             <?php else: ?>
                 <?php foreach ($artist_list as $artist): ?>
                 <tr>
-                    <td><?= esc($artist['id']) ?></td>
+                    <td><?= esc($artist->id) ?></td>
                     <td>
-                        <?php if ($artist['photo']): ?>
-                            <img src="<?= esc($artist['photo']) ?>" alt="<?= esc($artist['name']) ?>"
+                        <?php if ($artist->photo): ?>
+                            <img src="<?= esc($artist->photo) ?>" alt="<?= esc($artist->name) ?>"
                                  width="48" height="48" class="rounded-circle object-fit-cover">
                         <?php else: ?>
                             <span class="text-muted"><i class="bi bi-person-circle fs-3"></i></span>
                         <?php endif; ?>
                     </td>
-                    <td><?= esc($artist['name']) ?></td>
+                    <td><?= esc($artist->name) ?></td>
                     <td class="text-muted small">
-                        <?= esc(mb_substr(strip_tags($artist['bio'] ?? ''), 0, 80)) ?><?= strlen($artist['bio'] ?? '') > 80 ? '…' : '' ?>
+                        <?= esc(mb_substr(strip_tags($artist->bio ?? ''), 0, 80)) ?><?= strlen($artist->bio ?? '') > 80 ? '…' : '' ?>
                     </td>
-                    <td><?= esc(date('d.m.Y', strtotime($artist['created_at']))) ?></td>
+                    <td><?= esc(date('d.m.Y', strtotime($artist->created_at))) ?></td>
                     <td>
-                        <a href="<?= base_url('artist/' . $artist['id'] . '/edit') ?>" class="btn btn-sm btn-outline-secondary">
+                        <a href="<?= base_url('artist/' . $artist->id . '/edit') ?>" class="btn btn-sm btn-outline-secondary">
                             <i class="bi bi-pencil"></i>
                         </a>
                         <button type="button" class="btn btn-sm btn-outline-danger"
                                 data-bs-toggle="modal"
                                 data-bs-target="#deleteModal"
-                                data-id="<?= $artist['id'] ?>"
-                                data-name="<?= esc($artist['name']) ?>">
+                                data-id="<?= $artist->id ?>"
+                                data-name="<?= esc($artist->name) ?>">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>

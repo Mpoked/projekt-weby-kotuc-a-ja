@@ -44,14 +44,14 @@ class AuthController extends BaseController
 
         $user = $this->userModel->findByLogin($login);
 
-        if ($user && password_verify($password, $user['password_hash'])) {
+        if ($user && password_verify($password, $user->password_hash)) {
             session()->set([
-                'user_id'   => $user['id'],
-                'username'  => $user['username'],
-                'role'      => $user['role'],
+                'user_id'   => $user->id,
+                'username'  => $user->username,
+                'role'      => $user->role,
                 'logged_in' => true,
             ]);
-            session()->setFlashdata('alert', ['type' => 'success', 'msg' => 'Vítejte, ' . esc($user['username']) . '!']);
+            session()->setFlashdata('alert', ['type' => 'success', 'msg' => 'Vítejte, ' . esc($user->username) . '!']);
             return redirect()->to(base_url('/'));
         }
 

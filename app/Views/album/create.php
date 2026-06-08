@@ -32,8 +32,8 @@
                 <select name="artist_id" id="artist_id" class="form-select" required>
                     <option value="" disabled selected>— Vyberte umělce —</option>
                     <?php foreach ($artist_options as $a): ?>
-                        <option value="<?= $a['id'] ?>" <?= old('artist_id') == $a['id'] ? 'selected' : '' ?>>
-                            <?= esc($a['name']) ?>
+                        <option value="<?= $a->id ?>" <?= old('artist_id') == $a->id ? 'selected' : '' ?>>
+                            <?= esc($a->name) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>

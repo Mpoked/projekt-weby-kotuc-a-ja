@@ -6,21 +6,21 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Domů</a></li>
         <li class="breadcrumb-item"><a href="<?= base_url('album') ?>">Alba</a></li>
-        <li class="breadcrumb-item active"><?= esc($album['title']) ?></li>
+        <li class="breadcrumb-item active"><?= esc($album->title) ?></li>
     </ol>
 </nav>
 
 <div class="row mb-4">
     <div class="col-md-3 text-center mb-3">
-        <?php if ($album['cover_image']): ?>
-            <img src="<?= esc($album['cover_image']) ?>" class="img-fluid rounded shadow" style="max-height:280px;" alt="<?= esc($album['title']) ?>">
+        <?php if ($album->cover_image): ?>
+            <img src="<?= esc($album->cover_image) ?>" class="img-fluid rounded shadow" style="max-height:280px;" alt="<?= esc($album->title) ?>">
         <?php else: ?>
             <div class="bg-light border rounded d-flex align-items-center justify-content-center" style="height:250px;">
                 <i class="bi bi-disc fs-1 text-muted"></i>
             </div>
         <?php endif; ?>
         <div class="mt-2">
-            <a href="<?= base_url('album/' . $album['id'] . '/pdf') ?>" class="btn btn-sm btn-outline-secondary">
+            <a href="<?= base_url('album/' . $album->id . '/pdf') ?>" class="btn btn-sm btn-outline-secondary">
                 <i class="bi bi-file-pdf"></i> Stáhnout PDF
             </a>
         </div>
@@ -29,26 +29,26 @@
     <div class="col-md-9">
         <div class="d-flex justify-content-between align-items-start">
             <div>
-                <h1 class="h2 mb-1"><?= esc($album['title']) ?></h1>
+                <h1 class="h2 mb-1"><?= esc($album->title) ?></h1>
                 <p class="text-muted mb-1">
-                    <a href="<?= base_url('artist/' . $album['artist_id']) ?>" class="text-muted">
-                        <?= esc($album['artist_name']) ?>
+                    <a href="<?= base_url('artist/' . $album->artist_id) ?>" class="text-muted">
+                        <?= esc($album->artist_name) ?>
                     </a>
-                    <?= $album['release_date'] ? ' · ' . date('Y', strtotime($album['release_date'])) : '' ?>
-                    <?= $album['label'] ? ' · ' . esc($album['label']) : '' ?>
+                    <?= $album->release_date ? ' · ' . date('Y', strtotime($album->release_date)) : '' ?>
+                    <?= $album->label ? ' · ' . esc($album->label) : '' ?>
                 </p>
-                <?php if ($album['avg_rating']): ?>
+                <?php if ($album->avg_rating): ?>
                 <p class="mb-1">
                     <span class="badge bg-warning text-dark fs-6">
-                        ★ <?= number_format($album['avg_rating'], 1) ?>/10
+                        ★ <?= number_format($album->avg_rating, 1) ?>/10
                     </span>
-                    <small class="text-muted ms-1"><?= $album['review_count'] ?> recenzí</small>
+                    <small class="text-muted ms-1"><?= $album->review_count ?> recenzí</small>
                 </p>
                 <?php endif; ?>
             </div>
             <?php if (session()->get('role') === 'admin'): ?>
             <div class="d-flex gap-2">
-                <a href="<?= base_url('album/' . $album['id'] . '/edit') ?>" class="btn btn-sm btn-outline-secondary">
+                <a href="<?= base_url('album/' . $album->id . '/edit') ?>" class="btn btn-sm btn-outline-secondary">
                     <i class="bi bi-pencil"></i> Upravit
                 </a>
                 <button type="button" class="btn btn-sm btn-outline-danger"
@@ -59,14 +59,14 @@
             <?php endif; ?>
         </div>
 
-        <?php if ($album['description']): ?>
-        <div class="mt-3"><?= $album['description'] ?></div>
+        <?php if ($album->description): ?>
+        <div class="mt-3"><?= $album->description ?></div>
         <?php endif; ?>
     </div>
 </div>
 
 <!-- Tracklist -->
-<?php if (! empty($album['tracks'])): ?>
+<?php if (! empty($album->tracks)): ?>
 <h2 class="h5 mb-2">Skladby</h2>
 <div class="table-responsive mb-4">
     <table class="table table-sm table-hover">
@@ -81,25 +81,25 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($album['tracks'] as $track): ?>
+            <?php foreach ($album->tracks as $track): ?>
             <tr>
-                <td class="text-muted"><?= esc($track['track_number'] ?? '–') ?></td>
-                <td><?= esc($track['title']) ?></td>
+                <td class="text-muted"><?= esc($track->track_number ?? '–') ?></td>
+                <td><?= esc($track->title) ?></td>
                 <td class="text-muted">
-                    <?php if ($track['duration']): ?>
-                        <?= gmdate('i:s', $track['duration']) ?>
+                    <?php if ($track->duration): ?>
+                        <?= gmdate('i:s', $track->duration) ?>
                     <?php else: ?>
                         –
                     <?php endif; ?>
                 </td>
                 <?php if (session()->get('role') === 'admin'): ?>
                 <td>
-                    <a href="<?= base_url('album/' . $album['id'] . '/track/' . $track['id'] . '/edit') ?>" class="btn btn-sm btn-outline-secondary py-0">
+                    <a href="<?= base_url('album/' . $album->id . '/track/' . $track->id . '/edit') ?>" class="btn btn-sm btn-outline-secondary py-0">
                         <i class="bi bi-pencil"></i>
                     </a>
                     <button type="button" class="btn btn-sm btn-outline-danger py-0"
                             data-bs-toggle="modal" data-bs-target="#deleteTrackModal"
-                            data-id="<?= $track['id'] ?>" data-name="<?= esc($track['title']) ?>">
+                            data-id="<?= $track->id ?>" data-name="<?= esc($track->title) ?>">
                         <i class="bi bi-trash"></i>
                     </button>
                 </td>
@@ -112,25 +112,25 @@
 <?php endif; ?>
 
 <?php if (session()->get('role') === 'admin'): ?>
-<a href="<?= base_url('album/' . $album['id'] . '/track/create') ?>" class="btn btn-sm btn-outline-primary mb-4">
+<a href="<?= base_url('album/' . $album->id . '/track/create') ?>" class="btn btn-sm btn-outline-primary mb-4">
     <i class="bi bi-plus"></i> Přidat skladbu
 </a>
 <?php endif; ?>
 
 <!-- Recenze -->
 <h2 class="h5 mb-3">Recenze</h2>
-<?php if (empty($album['reviews'])): ?>
+<?php if (empty($album->reviews)): ?>
     <p class="text-muted">Zatím žádné recenze.</p>
 <?php else: ?>
-    <?php foreach ($album['reviews'] as $review): ?>
+    <?php foreach ($album->reviews as $review): ?>
     <div class="card mb-2">
         <div class="card-body py-2">
             <div class="d-flex justify-content-between align-items-center">
-                <strong><?= esc($review['username']) ?></strong>
+                <strong><?= esc($review->username) ?></strong>
                 <div class="d-flex align-items-center gap-2">
-                    <span class="badge bg-warning text-dark">★ <?= esc($review['rating']) ?>/10</span>
+                    <span class="badge bg-warning text-dark">★ <?= esc($review->rating) ?>/10</span>
                     <?php if (session()->get('role') === 'admin'): ?>
-                    <form method="post" action="<?= base_url('album/' . $album['id'] . '/review/' . $review['id'] . '/delete') ?>" class="d-inline">
+                    <form method="post" action="<?= base_url('album/' . $album->id . '/review/' . $review->id . '/delete') ?>" class="d-inline">
                         <?= csrf_field() ?>
                         <button type="submit" class="btn btn-sm btn-outline-danger py-0" onclick="return confirm('Smazat recenzi?')">
                             <i class="bi bi-trash"></i>
@@ -139,8 +139,8 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <p class="mb-0 mt-1"><?= esc($review['body']) ?></p>
-            <small class="text-muted"><?= date('d.m.Y', strtotime($review['created_at'])) ?></small>
+            <p class="mb-0 mt-1"><?= esc($review->body) ?></p>
+            <small class="text-muted"><?= date('d.m.Y', strtotime($review->created_at)) ?></small>
         </div>
     </div>
     <?php endforeach; ?>
@@ -151,7 +151,7 @@
 <div class="card mt-3">
     <div class="card-header">Přidat recenzi</div>
     <div class="card-body">
-        <form method="post" action="<?= base_url('album/' . $album['id'] . '/review/store') ?>">
+        <form method="post" action="<?= base_url('album/' . $album->id . '/review/store') ?>">
             <?= csrf_field() ?>
             <div class="row mb-3">
                 <div class="col-md-3">
@@ -183,7 +183,7 @@
             <div class="modal-body">Opravdu chcete smazat toto album?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zrušit</button>
-                <form method="post" action="<?= base_url('album/' . $album['id'] . '/delete') ?>">
+                <form method="post" action="<?= base_url('album/' . $album->id . '/delete') ?>">
                     <?= csrf_field() ?>
                     <button type="submit" class="btn btn-danger">Smazat</button>
                 </form>
@@ -215,7 +215,7 @@
         const btn = e.relatedTarget;
         document.getElementById('deleteTrackName').textContent = btn.getAttribute('data-name');
         document.getElementById('deleteTrackForm').action =
-            '<?= base_url('album/' . $album['id'] . '/track/') ?>' + btn.getAttribute('data-id') + '/delete';
+            '<?= base_url('album/' . $album->id . '/track/') ?>' + btn.getAttribute('data-id') + '/delete';
     });
 </script>
 <?php endif; ?>

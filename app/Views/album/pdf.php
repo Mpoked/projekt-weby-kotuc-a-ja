@@ -15,21 +15,21 @@
     </style>
 </head>
 <body>
-    <h1><?= htmlspecialchars($album['title']) ?></h1>
+    <h1><?= htmlspecialchars($album->title) ?></h1>
     <div class="meta">
-        <?= htmlspecialchars($album['artist_name']) ?>
-        <?= $album['release_date'] ? ' · ' . date('Y', strtotime($album['release_date'])) : '' ?>
-        <?= $album['label'] ? ' · ' . htmlspecialchars($album['label']) : '' ?>
-        <?php if ($album['avg_rating']): ?>
-            · <span class="rating">★ <?= number_format($album['avg_rating'], 1) ?>/10</span>
+        <?= htmlspecialchars($album->artist_name) ?>
+        <?= $album->release_date ? ' · ' . date('Y', strtotime($album->release_date)) : '' ?>
+        <?= $album->label ? ' · ' . htmlspecialchars($album->label) : '' ?>
+        <?php if ($album->avg_rating): ?>
+            · <span class="rating">★ <?= number_format($album->avg_rating, 1) ?>/10</span>
         <?php endif; ?>
     </div>
 
-    <?php if ($album['description']): ?>
-    <p><?= strip_tags($album['description']) ?></p>
+    <?php if ($album->description): ?>
+    <p><?= strip_tags($album->description) ?></p>
     <?php endif; ?>
 
-    <?php if (! empty($album['tracks'])): ?>
+    <?php if (! empty($album->tracks)): ?>
     <h2>Tracklist</h2>
     <table>
         <thead>
@@ -40,25 +40,25 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($album['tracks'] as $track): ?>
+            <?php foreach ($album->tracks as $track): ?>
             <tr>
-                <td><?= htmlspecialchars($track['track_number'] ?? '–') ?></td>
-                <td><?= htmlspecialchars($track['title']) ?></td>
-                <td><?= $track['duration'] ? gmdate('i:s', $track['duration']) : '–' ?></td>
+                <td><?= htmlspecialchars($track->track_number ?? '–') ?></td>
+                <td><?= htmlspecialchars($track->title) ?></td>
+                <td><?= $track->duration ? gmdate('i:s', $track->duration) : '–' ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
     <?php endif; ?>
 
-    <?php if (! empty($album['reviews'])): ?>
+    <?php if (! empty($album->reviews)): ?>
     <h2>Recenze</h2>
-    <?php foreach ($album['reviews'] as $review): ?>
+    <?php foreach ($album->reviews as $review): ?>
     <div class="review">
-        <strong><?= htmlspecialchars($review['username']) ?></strong>
-        · <span class="rating">★ <?= htmlspecialchars($review['rating']) ?>/10</span>
-        · <small><?= date('d.m.Y', strtotime($review['created_at'])) ?></small>
-        <p><?= htmlspecialchars($review['body']) ?></p>
+        <strong><?= htmlspecialchars($review->username) ?></strong>
+        · <span class="rating">★ <?= htmlspecialchars($review->rating) ?>/10</span>
+        · <small><?= date('d.m.Y', strtotime($review->created_at)) ?></small>
+        <p><?= htmlspecialchars($review->body) ?></p>
     </div>
     <?php endforeach; ?>
     <?php endif; ?>

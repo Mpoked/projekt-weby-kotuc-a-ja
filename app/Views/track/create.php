@@ -6,7 +6,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="<?= base_url('/') ?>">Domů</a></li>
         <li class="breadcrumb-item"><a href="<?= base_url('album') ?>">Alba</a></li>
-        <li class="breadcrumb-item"><a href="<?= base_url('album/' . $album['id']) ?>"><?= esc($album['title']) ?></a></li>
+        <li class="breadcrumb-item"><a href="<?= base_url('album/' . $album->id) ?>"><?= esc($album->title) ?></a></li>
         <li class="breadcrumb-item active">Přidat skladbu</li>
     </ol>
 </nav>
@@ -15,7 +15,7 @@
 
 <div class="card shadow-sm" style="max-width: 600px;">
     <div class="card-body">
-        <form action="<?= base_url('album/' . $album['id'] . '/track/store') ?>" method="post">
+        <form action="<?= base_url('album/' . $album->id . '/track/store') ?>" method="post">
             <?= csrf_field() ?>
 
             <div class="mb-3">
@@ -42,7 +42,7 @@
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-save"></i> Uložit
                 </button>
-                <a href="<?= base_url('album/' . $album['id']) ?>" class="btn btn-outline-secondary">Zpět</a>
+                <a href="<?= base_url('album/' . $album->id) ?>" class="btn btn-outline-secondary">Zpět</a>
             </div>
         </form>
     </div>

@@ -9,7 +9,7 @@ class UserModel extends Model
     protected $table            = 'user';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
+    protected $returnType       = 'object';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = ['username', 'email', 'password_hash', 'role'];
@@ -31,9 +31,9 @@ class UserModel extends Model
      * Používá se při přihlašování – lze zadat obojí.
      *
      * @param string $login  Email nebo username
-     * @return array|null    Data uživatele (bez deleted), nebo null pokud nenalezen
+     * @return object|null   Data uživatele (bez deleted), nebo null pokud nenalezen
      */
-    public function findByLogin(string $login): ?array
+    public function findByLogin(string $login): ?object
     {
         return $this->where('email', $login)
                     ->orWhere('username', $login)

@@ -46,7 +46,7 @@ class ArtistController extends BaseController
         }
 
         $db = \Config\Database::connect();
-        $genres = $db->table('genre ag')
+        $genres = $db->table('genre')
             ->select('genre.id, genre.name')
             ->join('artist_genre', 'artist_genre.genre_id = genre.id')
             ->where('artist_genre.artist_id', $id)

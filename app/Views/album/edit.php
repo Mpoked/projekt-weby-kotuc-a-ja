@@ -21,7 +21,7 @@
             <?php endforeach; ?>
         </ul>
     </div>
-<?php endif; ?>
+<?php endif;  ?>
 
 <div class="card shadow-sm" style="max-width: 750px;">
     <div class="card-body">

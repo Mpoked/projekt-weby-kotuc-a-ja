@@ -59,7 +59,7 @@ class ArtistController extends BaseController
             ->findAll();
 
         return view('artist/show', [
-            'title'  => $artist['name'],
+            'title'  => $artist->name,
             'artist' => $artist,
             'genres' => $genres,
             'albums' => $albums,

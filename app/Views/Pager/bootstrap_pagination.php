@@ -3,9 +3,9 @@
 <nav aria-label="Stránkování">
     <ul class="pagination justify-content-center">
 
-        <?php if ($pager->hasPreviousPage()): ?>
+        <?php if ($pager->hasPrevious()): ?>
             <li class="page-item">
-                <a class="page-link" href="<?= $pager->getPreviousPageURI() ?>">&laquo;</a>
+                <a class="page-link" href="<?= $pager->previous() ?>">&laquo;</a>
             </li>
         <?php else: ?>
             <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
@@ -17,9 +17,9 @@
             </li>
         <?php endforeach; ?>
 
-        <?php if ($pager->hasNextPage()): ?>
+        <?php if ($pager->hasNext()): ?>
             <li class="page-item">
-                <a class="page-link" href="<?= $pager->getNextPageURI() ?>">&raquo;</a>
+                <a class="page-link" href="<?= $pager->next() ?>">&raquo;</a>
             </li>
         <?php else: ?>
             <li class="page-item disabled"><span class="page-link">&raquo;</span></li>

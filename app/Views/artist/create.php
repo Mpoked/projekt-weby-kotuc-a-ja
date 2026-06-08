@@ -23,7 +23,7 @@
     </div>
 <?php endif; ?>
 
-<div class="card shadow-sm" style="max-width: 700px;">
+<div class="card shadow-sm" style="max-width: 750px;">
     <div class="card-body">
         <form action="<?= base_url('artist/store') ?>" method="post" enctype="multipart/form-data">
             <?= csrf_field() ?>
@@ -32,6 +32,32 @@
                 <label for="name" class="form-label">Název umělce <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="name" name="name"
                        value="<?= esc(old('name')) ?>" required>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="country" class="form-label">Země původu</label>
+                    <input type="text" class="form-control" id="country" name="country"
+                           value="<?= esc(old('country')) ?>" placeholder="např. USA">
+                </div>
+                <div class="col-md-6">
+                    <label for="formed_year" class="form-label">Rok vzniku</label>
+                    <input type="number" class="form-control" id="formed_year" name="formed_year"
+                           value="<?= esc(old('formed_year')) ?>" min="1900" max="<?= date('Y') ?>" placeholder="např. 1990">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="genres" class="form-label">Žánry</label>
+                <select id="genres" name="genres[]" class="form-select" multiple>
+                    <?php foreach ($genre_options as $genre): ?>
+                        <option value="<?= $genre['id'] ?>"
+                            <?= in_array($genre['id'], (array) old('genres', [])) ? 'selected' : '' ?>>
+                            <?= esc($genre['name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <div class="form-text">Vyberte jeden nebo více žánrů (nepovinné).</div>
             </div>
 
             <div class="mb-3">
@@ -65,6 +91,12 @@
         toolbar: 'bold italic underline | bullist numlist | link',
         menubar: false,
         height: 250,
+    });
+
+    $('#genres').select2({
+        theme: 'bootstrap-5',
+        placeholder: 'Vyberte žánry...',
+        allowClear: true,
     });
 </script>
 

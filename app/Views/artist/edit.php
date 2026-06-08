@@ -34,6 +34,33 @@
                        value="<?= esc(old('name', $artist['name'])) ?>" required>
             </div>
 
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="country" class="form-label">Země původu</label>
+                    <input type="text" class="form-control" id="country" name="country"
+                           value="<?= esc(old('country', $artist['country'] ?? '')) ?>" placeholder="např. USA">
+                </div>
+                <div class="col-md-6">
+                    <label for="formed_year" class="form-label">Rok vzniku</label>
+                    <input type="number" class="form-control" id="formed_year" name="formed_year"
+                           value="<?= esc(old('formed_year', $artist['formed_year'] ?? '')) ?>" min="1900" max="<?= date('Y') ?>">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="genres" class="form-label">Žánry</label>
+                <select id="genres" name="genres[]" class="form-select" multiple>
+                    <?php
+                    $currentGenres = old('genres', $selected_genres ?? []);
+                    foreach ($genre_options as $genre): ?>
+                        <option value="<?= $genre['id'] ?>"
+                            <?= in_array($genre['id'], (array) $currentGenres) ? 'selected' : '' ?>>
+                            <?= esc($genre['name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
             <div class="mb-3">
                 <label for="photo" class="form-label">Fotografie</label>
                 <?php if ($artist['photo']): ?>
@@ -72,6 +99,12 @@
         toolbar: 'bold italic underline | bullist numlist | link',
         menubar: false,
         height: 250,
+    });
+
+    $('#genres').select2({
+        theme: 'bootstrap-5',
+        placeholder: 'Vyberte žánry...',
+        allowClear: true,
     });
 </script>
 

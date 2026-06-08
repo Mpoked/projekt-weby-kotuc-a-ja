@@ -31,7 +31,7 @@ class ArtistLib
      */
     public function getAll(): array
     {
-        return $this->model->orderBy('name', 'ASC')->findAll();
+        return $this->model->orderBy('id', 'ASC')->findAll();
     }
 
     /**

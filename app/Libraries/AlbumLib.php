@@ -13,7 +13,7 @@ use App\Models\AlbumModel;
 class AlbumLib
 {
     protected AlbumModel $model;
-    protected string $uploadPath = WRITEPATH . 'uploads/albums/';
+    protected string $uploadPath = FCPATH . 'uploads/albums/';
     protected string $uploadUrl  = 'uploads/albums/';
 
     public function __construct()
@@ -54,7 +54,7 @@ class AlbumLib
         $totalRows = $builder->countAllResults(false);
         $page      = (int) ($_GET['page'] ?? 1);
         $offset    = ($page - 1) * $perPage;
-        $albums    = $builder->limit($perPage, $offset)->get()->getResultArray();
+        $albums    = $builder->limit($perPage, $offset)->get()->getResultObject();
 
         $pager = \Config\Services::pager();
         $pager->makeLinks($page, $perPage, $totalRows);
@@ -75,16 +75,16 @@ class AlbumLib
             ->join('artist', 'artist.id = album.artist_id')
             ->where('album.deleted_at IS NULL')
             ->orderBy('album.release_date', 'DESC')
-            ->get()->getResultArray();
+            ->get()->getResultObject();
     }
 
     /**
      * Vrátí základní data jednoho alba podle ID.
      *
      * @param int $id  ID alba
-     * @return array|null  Data alba, nebo null pokud neexistuje
+     * @return object|null  Data alba, nebo null pokud neexistuje
      */
-    public function getById(int $id): ?array
+    public function getById(int $id): ?object
     {
         return $this->model->find($id);
     }
@@ -94,9 +94,9 @@ class AlbumLib
      * Používá JOIN a agregační funkci AVG().
      *
      * @param int $id  ID alba
-     * @return array|null  Pole s klíči: album data, artist_name, avg_rating, tracks, reviews
+     * @return object|null  Objekt s klíči: album data, artist_name, avg_rating, tracks, reviews
      */
-    public function getWithDetails(int $id): ?array
+    public function getWithDetails(int $id): ?object
     {
         $db = \Config\Database::connect();
 
@@ -109,25 +109,25 @@ class AlbumLib
             ->where('album.id', $id)
             ->where('album.deleted_at IS NULL')
             ->groupBy('album.id')
-            ->get()->getRowArray();
+            ->get()->getRowObject();
 
         if (! $album) {
             return null;
         }
 
-        $album['tracks'] = $db->table('track')
+        $album->tracks = $db->table('track')
             ->where('album_id', $id)
             ->where('deleted_at IS NULL')
             ->orderBy('track_number', 'ASC')
-            ->get()->getResultArray();
+            ->get()->getResultObject();
 
-        $album['reviews'] = $db->table('review')
+        $album->reviews = $db->table('review')
             ->select('review.*, user.username')
             ->join('user', 'user.id = review.user_id')
             ->where('review.album_id', $id)
             ->where('review.deleted_at IS NULL')
             ->orderBy('review.created_at', 'DESC')
-            ->get()->getResultArray();
+            ->get()->getResultObject();
 
         return $album;
     }
@@ -163,8 +163,8 @@ class AlbumLib
     {
         if ($file !== null && $file->isValid() && ! $file->hasMoved()) {
             $album = $this->getById($id);
-            if ($album && $album['cover_image']) {
-                $oldFile = $this->uploadPath . basename($album['cover_image']);
+            if ($album && $album->cover_image) {
+                $oldFile = $this->uploadPath . basename($album->cover_image);
                 if (file_exists($oldFile)) {
                     unlink($oldFile);
                 }

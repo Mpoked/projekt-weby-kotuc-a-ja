@@ -32,7 +32,7 @@ class GenreController extends BaseController
             ->where('genre.deleted_at IS NULL')
             ->groupBy('genre.id')
             ->orderBy('genre.name', 'ASC')
-            ->get()->getResultArray();
+            ->get()->getResultObject();
 
         return view('genre/index', [
             'title'  => 'Žánry',
@@ -59,10 +59,10 @@ class GenreController extends BaseController
             ->where('artist_genre.genre_id', $id)
             ->where('artist.deleted_at IS NULL')
             ->orderBy('artist.name', 'ASC')
-            ->get()->getResultArray();
+            ->get()->getResultObject();
 
         return view('genre/show', [
-            'title'   => $genre['name'],
+            'title'   => $genre->name,
             'genre'   => $genre,
             'artists' => $artists,
         ]);

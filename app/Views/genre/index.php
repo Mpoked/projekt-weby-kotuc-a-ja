@@ -17,16 +17,16 @@
 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
     <?php foreach ($genres as $genre): ?>
     <div class="col">
-        <a href="<?= base_url('genre/' . $genre['id']) ?>" class="text-decoration-none text-dark">
+        <a href="<?= base_url('genre/' . $genre->id) ?>" class="text-decoration-none text-dark">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-body">
-                    <h5 class="card-title"><?= esc($genre['name']) ?></h5>
-                    <?php if ($genre['description']): ?>
+                    <h5 class="card-title"><?= esc($genre->name) ?></h5>
+                    <?php if ($genre->description): ?>
                         <p class="card-text text-muted small">
-                            <?= esc(mb_substr($genre['description'], 0, 80)) ?><?= mb_strlen($genre['description']) > 80 ? '…' : '' ?>
+                            <?= esc(mb_substr($genre->description, 0, 80)) ?><?= mb_strlen($genre->description) > 80 ? '…' : '' ?>
                         </p>
                     <?php endif; ?>
-                    <span class="badge bg-primary"><?= (int)$genre['artist_count'] ?> umělců</span>
+                    <span class="badge bg-primary"><?= (int)$genre->artist_count ?> umělců</span>
                 </div>
             </div>
         </a>

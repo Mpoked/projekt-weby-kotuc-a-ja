@@ -24,8 +24,8 @@
         <select name="genre_id" class="form-select">
             <option value="">— Všechny žánry —</option>
             <?php foreach ($genres as $g): ?>
-                <option value="<?= $g['id'] ?>" <?= (string)($filters['genre_id'] ?? '') === (string)$g['id'] ? 'selected' : '' ?>>
-                    <?= esc($g['name']) ?>
+                <option value="<?= $g->id ?>" <?= (string)($filters['genre_id'] ?? '') === (string)$g->id ? 'selected' : '' ?>>
+                    <?= esc($g->name) ?>
                 </option>
             <?php endforeach; ?>
         </select>
@@ -53,10 +53,10 @@
     <?php foreach ($albums as $album): ?>
     <div class="col">
         <div class="card h-100 shadow-sm">
-            <a href="<?= base_url('album/' . $album['id']) ?>">
-                <?php if ($album['cover_image']): ?>
-                    <img src="<?= esc($album['cover_image']) ?>" class="card-img-top object-fit-cover"
-                         style="height:200px;" alt="<?= esc($album['title']) ?>">
+            <a href="<?= base_url('album/' . $album->id) ?>">
+                <?php if ($album->cover_image): ?>
+                    <img src="<?= esc($album->cover_image) ?>" class="card-img-top object-fit-cover"
+                         style="height:200px;" alt="<?= esc($album->title) ?>">
                 <?php else: ?>
                     <div class="bg-light d-flex align-items-center justify-content-center" style="height:200px;">
                         <i class="bi bi-disc fs-1 text-muted"></i>
@@ -65,27 +65,27 @@
             </a>
             <div class="card-body">
                 <h6 class="card-title mb-1">
-                    <a href="<?= base_url('album/' . $album['id']) ?>" class="text-decoration-none text-dark">
-                        <?= esc($album['title']) ?>
+                    <a href="<?= base_url('album/' . $album->id) ?>" class="text-decoration-none text-dark">
+                        <?= esc($album->title) ?>
                     </a>
                 </h6>
                 <p class="card-text text-muted small mb-0">
-                    <a href="<?= base_url('artist/' . $album['artist_id']) ?>" class="text-muted text-decoration-none">
-                        <?= esc($album['artist_name']) ?>
+                    <a href="<?= base_url('artist/' . $album->artist_id) ?>" class="text-muted text-decoration-none">
+                        <?= esc($album->artist_name) ?>
                     </a>
                 </p>
-                <?php if ($album['release_date']): ?>
-                    <p class="card-text text-muted small"><?= date('Y', strtotime($album['release_date'])) ?></p>
+                <?php if ($album->release_date): ?>
+                    <p class="card-text text-muted small"><?= date('Y', strtotime($album->release_date)) ?></p>
                 <?php endif; ?>
             </div>
             <?php if (session()->get('role') === 'admin'): ?>
             <div class="card-footer bg-transparent d-flex gap-1 p-2">
-                <a href="<?= base_url('album/' . $album['id'] . '/edit') ?>" class="btn btn-sm btn-outline-secondary flex-fill">
+                <a href="<?= base_url('album/' . $album->id . '/edit') ?>" class="btn btn-sm btn-outline-secondary flex-fill">
                     <i class="bi bi-pencil"></i>
                 </a>
                 <button type="button" class="btn btn-sm btn-outline-danger flex-fill"
                         data-bs-toggle="modal" data-bs-target="#deleteModal"
-                        data-id="<?= $album['id'] ?>" data-name="<?= esc($album['title']) ?>">
+                        data-id="<?= $album->id ?>" data-name="<?= esc($album->title) ?>">
                     <i class="bi bi-trash"></i>
                 </button>
             </div>
